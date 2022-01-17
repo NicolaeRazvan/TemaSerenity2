@@ -36,7 +36,7 @@ public class SearchSteps extends BaseSteps {
 
     @Step
     public void getTextAndCompare(){
-        searchResultsPage.priceCompareSearch();
+        searchResultsPage.isPriceCorrect();
     }
 
     @Step
@@ -52,5 +52,10 @@ public class SearchSteps extends BaseSteps {
     @Step
     public void clickLinen(){
         searchResultsPage.clickOnLinen();
+    }
+
+    @Step
+    public void priceAscendingWithAssert(){
+        searchResultsPage.priceIsAscending();
     }
 }

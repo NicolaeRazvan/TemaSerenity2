@@ -21,6 +21,6 @@ public class SearchTest extends BaseTest{
     public void searchByPriceTest(){
         searchSteps.executeSearch("linen");
         searchSteps.executeSort();
-        searchSteps.getTextAndCompare();
+        searchSteps.priceAscendingWithAssert();
     }
 }

@@ -11,8 +11,11 @@ import java.util.List;
 
 public class SearchResultsPage extends BasePage {
 
-    @FindBy(css = ".products-grid .item")
+    @FindBy(css = ".products-grid .item:not([id*='old']")
     private List<WebElementFacade> listOfProducts;
+
+    @FindBy(css = ".price")
+    private List<WebElementFacade> listOfProducts1;
 
     @FindBy(css = ".category-products > .toolbar .sorter select")
     private WebElementFacade sortPrice;
@@ -50,17 +53,15 @@ public class SearchResultsPage extends BasePage {
     }
 
 
-    public void priceCompareSearch() {
-        waitFor(listOfProducts.get(0));
-        for (WebElementFacade element : listOfProducts) {
-            int a = Integer.parseInt(element.findElement(By.cssSelector("product-price-421")).getText());
-            int b = Integer.parseInt(element.findElement(By.cssSelector("product-price-406")).getText());
-            if (a > b) {
-                System.out.println("Sorting by price is not working.");
-            } else Assert.assertTrue("The first product is always smaller then the last product",a<b);
-                System.out.println("Price filtering works. The first item has a lower price than the second one.");
-        }
+    public boolean isPriceCorrect() {
+       return getIntFromPrice(listOfProducts.get(0).getText()) < getIntFromPrice(listOfProducts.get(listOfProducts.size()-1).getText());
+    }
 
+    public boolean priceIsAscending() {
+        int a = getIntFromPrice(listOfProducts1.get(0).getText());
+        int b = getIntFromPrice(listOfProducts1.get(listOfProducts1.size() - 1).getText());
+        Assert.assertTrue("Ascending price is correct.", a < b);
+        return a < b;
     }
 
     public void clickOnNeck(){
